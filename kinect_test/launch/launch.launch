@@ -1,0 +1,7 @@
+<launch>
+  <include file="$(find openni_launch)/launch/openni.launch"/>
+  <group ns="baxter_security">
+    <node name="find_red" pkg="kinect_test" type="find_red.py" respawn="true"/>
+    <node name="find_xyz" pkg="kinect_test" type="find_xyz.py" respawn="true"/>
+  </group>
+</launch>

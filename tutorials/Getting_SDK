@@ -1,0 +1,20 @@
+#This assumes you have pulled our directory and have it in a working catkin workspace. 
+
+#You'll have to get the SDK dependancies - run:
+$ sudo apt-get install python-wstool python-rosdep
+
+#Then you'll need to get the baxter SDK set up. Navigate to the /src folder in your workspace and:
+
+$ wstool init .
+$ wstool merge https://raw.github.com/RethinkRobotics/baxter/master/baxter_sdk.rosinstall
+$ wstool update
+$ cd ..
+$ source /opt/ros/groovy/setup.bash
+$ catkin_make
+
+#now all of the files are there. The next step is to edit the Bashrc. Add:
+
+source /opt/ros/groovy/setup.bash
+source / **Catkin_ws Path** /devel/setup.bash
+export ROS_HOSTNAME= ** "pc-name".local ** (for example, corey-pc.local)
+export ROS_MASTER_URI=http://baxtette.local:11311

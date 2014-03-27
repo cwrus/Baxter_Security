@@ -1,0 +1,28 @@
+#some basic commands, the first few you'll need to get going. 
+
+#to enable the robot:
+rosrun baxter_tools enable_robot.py -e 
+
+#to re-enable the robot after an e-stop:
+rosrun baxter_tools enable_robot.py -r
+
+#to turn off the sonar:
+rostopic pub /robot/sonar/head_sonar/set_sonars_enabled std_msgs/UInt16 0
+
+#to turn the sonar on:
+rostopic pub /robot/sonar/head_sonar/set_sonars_enabled std_msgs/UInt16 4095
+
+##FOR SONAR - ONLY EVER USE 0 OR 4095
+
+#to turn off collision avoidance, run the next two commands, each in their own terminal and leave them.
+rostopic pub /robot/limb/left/suppress_collision_avoidance std_msgs/Empty -r 10
+rostopic pub /robot/limb/right/suppress_collision_avoidance std_msgs/Empty -r 10
+
+#to turn on trajectory server for moveit:
+rosrun baxter_interface joint_trajectory_action_server.py
+
+#to run moveit (to play with):
+ - enable robot
+ - enable trajectory server
+ - disable collision avoidance
+roslaunch baxter_moveit_config demo_baxter.launch

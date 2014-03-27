@@ -1,0 +1,12 @@
+#In order to set up Moveit, there are a couple steps. See https://github.com/RethinkRobotics/sdk-docs/wiki/#MoveIt-Tutorial for Rethink's tutorial. 
+
+#cd to your catkin workspace, and then run:
+
+$ git clone https://github.com/ros-planning/moveit_robots.git
+
+#this will pull the necessary configs. 
+#Now you have to install MoveIt.
+
+$ sudo apt-get install ros-groovy-moveit-full
+
+Now Moveit is installed and configured. 

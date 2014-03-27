@@ -1,0 +1,22 @@
+<launch>
+  <!-- Enabled (and re-enable) Baxter -->
+  <node name="re-enable_baxter" pkg="rosrun" type="rosrun" args="baxter_tools enable_robot.py -r"/>
+  <node name="re-enable_baxter" pkg="rosrun" type="rosrun" args="baxter_tools enable_robot.py -e"/>
+
+  <!-- Start publishing to the nodes to disable the sonar and collision detection -->
+  <node name="baxter_sonar_disable" pkg="rostopic" type="rostopic" args="pub /robot/sonar/head_sonar/set_sonars_enabled std_msgs/UInt16 0"/>
+  <node name="baxter_leftarm_collision_diable" pkg="rostopic" type="rostopic" args="pub /robot/limb/left/suppress_collision_avoidance std_msgs/Empty -r 10"/>
+  <node name="baxter_rightarm_collision_diable" pkg="rostopic" type="rostopic" args="pub /robot/limb/right/suppress_collision_avoidance std_msgs/Empty -r 10"/>
+
+  <!-- Start the trajectory server -->
+  <node name="re-enable_baxter" pkg="rosrun" type="rosrun" args="baxter_interface joint_trajectory_action_server.py"/>
+  
+  <!-- Start Openni -->
+  <include file="$(find openni_launch)/launch/openni.launch"/>
+
+  <!-- Push our nodes into the bxter_security group -->
+  <group ns="baxter_security">
+    <node name="find_red" pkg="kinect_test" type="find_red.py" respawn="true"/>
+    <node name="find_xyz" pkg="kinect_test" type="find_xyz.py" respawn="true"/>
+  </group>
+</launch>

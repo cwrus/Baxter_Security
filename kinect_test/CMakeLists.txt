@@ -32,6 +32,6 @@ catkin_package(
   DEPENDS ${SYSTEM_DEPS}
 )
 
-install(PROGRAMS src/find_red.py
+install(PROGRAMS src/find_red.py src/find_xyz.py
   DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
 )

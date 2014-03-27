@@ -1,4 +1,4 @@
-ROS_HOSTNAME= **PC NAME**.local
+ROS_HOSTNAME= **PC NAME**
 ROS_MASTER_URI=http://baxtette.local:11311
 
 #enable:

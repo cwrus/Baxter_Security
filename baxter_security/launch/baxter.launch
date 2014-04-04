@@ -15,7 +15,7 @@
   <include file="$(find openni_launch)/launch/openni.launch"/>
 
   <!-- Set Baxter Right Hand Camera Settinga -->
-  <node name="baxter_right_cam_settings" pkg="rosservice" type="rosservice" args="call /cameras/open '{name: right_hand_camera, settings: {width: 960, height: 600 }}'"/>
+  <node name="baxter_right_cam_settings" pkg="rosservice" type="rosservice" args="call /cameras/open '{name: right_hand_camera, settings: {width: 1280, height: 800 }}'"/>
 
   <!-- Push our nodes into the bxter_security group -->
   <group ns="baxter_security">

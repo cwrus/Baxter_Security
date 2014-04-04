@@ -1,3 +1,6 @@
+# PULLED FROM: https://groups.google.com/a/rethinkrobotics.com/forum/#!topic/brr-users/bgvPap2I9PM
+
+
 import baxter_interface
 import baxter_external_devices
 import rospy

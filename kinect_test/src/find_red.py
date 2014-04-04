@@ -54,9 +54,12 @@ class RedDetect:
     # Fitting rectangle
     contour, hierarchy = cv2.findContours(cv_imageThresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+    largestCnt = 0;
+
     for cnt in contour:
       approx = cv2.approxPolyDP(cnt, cv2.arcLength(cnt, True)*0.02, True)
-      if len(approx) == 4 and cv2.contourArea(cnt) > 50: #need to tune this
+      if cv2.contourArea(cnt) > largestCnt: 
+        largestCnt = cnt;
         cv2.drawContours(cv_image, [cnt], 0, 255, 2)
         moments = cv2.moments(cnt, True)
         if(len(filter(lambda x: x==0, moments.values())) > 0):

@@ -13,6 +13,9 @@ from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
 from kinect_test.msg import Coords
 
+#Blue far: 110, 120, 200 - 120, 256, 256
+#Dark blue:110, 100, 40 - 130, 256, 256
+
 class RedDetect:
   def __init__(self):
     # Create this ros node
@@ -42,12 +45,12 @@ class RedDetect:
     cv_imageHSV = np.zeros((cv_image.shape),np.uint8) # Creating a blank image of cv_image size
     cv_imageHSV = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV) # Change color format
     cv_imageThresh = np.zeros((cv_image.shape), np.uint8)
-    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 120, 200)), np.array((120,256,256))) # Convert the HSV image to binary, getting red
+    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 100, 40)), np.array((130,256,256))) # Convert the HSV image to binary, getting red
     cv_imageThresh = cv2.GaussianBlur(cv_imageThresh, (3,3), 0) # Smooth the output picture
     # End getting color
 
-    cv2.namedWindow("Red")
-    cv2.imshow("Red", cv_imageThresh)
+    cv2.namedWindow("Color")
+    cv2.imshow("Color", cv_imageThresh)
     cv2.namedWindow("Video")
     cv2.imshow("Video", cv_image)
     cv2.waitKey(3)
@@ -55,22 +58,27 @@ class RedDetect:
     # Fitting rectangle
     contour, hierarchy = cv2.findContours(cv_imageThresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
+    largestArea = 0
+    largestCnt = 0
+
     for cnt in contour:
       approx = cv2.approxPolyDP(cnt, cv2.arcLength(cnt, True)*0.02, True)
-      if len(approx) == 4 and cv2.contourArea(cnt) > 50: #need to tune this
-        cv2.drawContours(cv_image, [cnt], 0, 255, 2)
-        moments = cv2.moments(cnt, True)
-        if(len(filter(lambda x: x==0, moments.values())) > 0):
-          continue
-        center = (moments['m10']/moments['m00'], moments['m01']/moments['m00'])
-        center = map(lambda x: int(round(x)), center)
-    
-        cv2.namedWindow("Shape")
-        cv2.imshow("Shape", cv_image)
-        cv2.waitKey(3)
-        self.msg.x = center[0]
-        self.msg.y = center[1]
-        self.pub.publish(self.msg)
+      if cv2.contourArea(cnt) > largestArea:       
+		largestCnt = cnt
+		largestArea = cv2.contourArea(cnt)
+
+    if (largestArea > 0):
+      cv2.drawContours(cv_image, [largestCnt], 0, 255, 2)
+      moments = cv2.moments(largestCnt, True)
+      center = (moments['m10']/moments['m00'], moments['m01']/moments['m00'])
+      center = map(lambda x: int(round(x)), center)
+
+      cv2.namedWindow("Shape")
+      cv2.imshow("Shape", cv_image)
+      cv2.waitKey(3)
+      self.msg.x = center[0]
+      self.msg.y = center[1]
+      self.pub.publish(self.msg)
 
 if __name__ == '__main__':
   rd = RedDetect()

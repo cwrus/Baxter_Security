@@ -5,6 +5,8 @@ import baxter_interface
 import time
 from std_msgs.msg import Float32
 
+# Yellow: Red 100, Green 65
+
 def main():
 	rospy.init_node("baxter_security_christmas")
 
@@ -14,9 +16,7 @@ def main():
 	redMsg = Float32()
 	greenMsg = Float32()
 
-	x = 0
-
-	while True:
+	while not rospy.is_shutdown():
 		red.publish(100.0)
 		green.publish(0.0)
 

@@ -16,7 +16,7 @@ def main():
 
 	x = 0
 
-	for x in range(0, 10):
+	while True:
 		red.publish(100.0)
 		green.publish(0.0)
 

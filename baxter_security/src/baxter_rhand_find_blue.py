@@ -81,6 +81,8 @@ class RedDetect:
       self.pub.publish(self.msg)
 
       (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(largestCnt)
+      if angle > 90 or angle < -90:
+        angle = ange - 180;
       self.msg.theta = angle;
       self.pub.publish(self.msg)  
 

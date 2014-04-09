@@ -11,7 +11,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from kinect_test.msg import Coords
+from baxter_security.msg import Coords
 
 #Blue far: 110, 120, 200 - 120, 256, 256
 #Dark blue:110, 100, 40 - 130, 256, 256
@@ -19,15 +19,11 @@ from kinect_test.msg import Coords
 class RedDetect:
   def __init__(self):
     # Create this ros node
-    rospy.init_node("baxter_security_hand_find_red", anonymous=True)
+    rospy.init_node("baxter_security_hand_find_blue", anonymous=True)
   
     # Create the publisher
     self.pub = rospy.Publisher("lighter_coords", Coords)
     self.msg = Coords()
-
-    # Create the publisher for the orientation
-    self.pub = rospy.Publisher("lighter_orientation", Orientation)
-    self.msg = Orientation()
 
     # Setup the OpenCV <--> ROS bridge
     self.bridge = CvBridge()
@@ -84,7 +80,7 @@ class RedDetect:
       self.msg.y = center[1]
       self.pub.publish(self.msg)
 
-      (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(cnt)
+      (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(largestCnt)
       self.msg.theta = angle;
       self.pub.publish(self.msg)  
 

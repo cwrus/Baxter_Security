@@ -21,10 +21,6 @@ class RedDetect:
     self.pub = rospy.Publisher("lighter_coords", Coords)
     self.msg = Coords()
 
-    # Create the publisher for the orientation
-    self.pub = rospy.Publisher("lighter_orientation", Orientation)
-    self.msg = Orientation()
-
     # Setup the OpenCV <--> ROS bridge
     self.bridge = CvBridge()
 
@@ -80,9 +76,6 @@ class RedDetect:
       self.msg.y = center[1]
       self.pub.publish(self.msg)
 
-      (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(cnt)
-      self.msg.theta = angle;
-      self.pub.publish(self.msg)
 
 if __name__ == '__main__':
   rd = RedDetect()

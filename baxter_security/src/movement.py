@@ -29,11 +29,10 @@ def moveRel(x, y, z):
 	newZ = curZ + z
 	loc = Point(newX, newY, newZ)
 
-	limb_joints = ik_solve("right", loc, pose["orientation"])
-	print limb_joints
+	limb_joints = ik_solve("right", loc, pose["orientation"]) 
 
-	#if (limb_joints != -1):
-		#right.move_to_joint_positions(limb_joints)
+	if (limb_joints != -1):
+		right.move_to_joint_positions(limb_joints)
 
 def moveTo(x, y, z):
 	right = baxter_interface.Limb('right')
@@ -68,22 +67,17 @@ def setOri(x, y, z, w):
 
 	if (limb_joints != -1):
 		right.move_to_joint_positions(limb_joints)
-	
-def main():
-	# Init this ros node and enable Baxter
-	rospy.init_node('move_right_hand')
-	rs = baxter_interface.RobotEnable()
-	rs.enable()
 
-	# Get Baxter's right arm and set a max speed
+def setWrist(theta):
 	right = baxter_interface.Limb('right')
-	rightGripper = baxter_interface.Gripper('right')
-	right.set_joint_position_speed(0.1)
+	rj = right.joint_names()
+	wrist = rj[6]
 
-	pose = right.endpoint_pose()
-	#print "Current pos: ", pose
-	moveRel(0, 0, -.1)
-	#moveTo(.6, -.2, .2)
+	# Not sure if this is needed
+	baxter_external_devices.getch()
+	
+	joint_command = {wrist: 0.0}
 
-if __name__ == '__main__':
-    sys.exit(main())
+	for x in range(0, 300):
+		right.set_joint_positions(joint_command)
+	

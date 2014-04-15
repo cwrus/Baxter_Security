@@ -7,6 +7,7 @@ import cv
 import cv2
 import numpy as np
 import sensor_msgs.point_cloud2 as pc2
+import math
 from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
@@ -73,18 +74,25 @@ class RedDetect:
       center = (moments['m10']/moments['m00'], moments['m01']/moments['m00'])
       center = map(lambda x: int(round(x)), center)
 
+      (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(largestCnt)
+
+      if angle > 90:
+        angle = angle - 180;
+
+      cv2.line(cv_image, (int(xpos),int(ypos)), (int(xpos + 30 * math.cos(math.radians(angle - 90))), int(ypos + 30 * math.sin(math.radians(angle - 90)))), (255, 255, 0))
+
+      print angle
+
       cv2.namedWindow("Shape")
       cv2.imshow("Shape", cv_image)
       cv2.waitKey(3)
+
       self.msg.x = center[0]
       self.msg.y = center[1]
       self.pub.publish(self.msg)
 
-      (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(largestCnt)
-      if angle > 90:
-        angle = angle - 180;
       self.msg.theta = angle;
-      self.pub.publish(self.msg)  
+      self.pub.publish(self.msg)
 
 if __name__ == '__main__':
   rd = RedDetect()

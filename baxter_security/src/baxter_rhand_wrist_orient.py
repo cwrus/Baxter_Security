@@ -26,15 +26,14 @@ def coordCallBack(data):
 		theta = math.radians(data.theta)
 
 		right = baxter_interface.Limb('right')
-		right.set_joint_position_speed(0.1)
+		right.set_joint_position_speed(1)
 		rj = right.joint_names()
 		wrist = rj[6]
 		orientation = right.joint_angle(wrist)
-		error = theta - orientation
 
-		print theta, orientation, error
+		movement.setWrist(orientation + theta)
 
-		movement.setWrist(theta)
+		#rospy.signal_shutdown("Movement complete")
 
 if __name__ == '__main__':
 	setup()

@@ -28,7 +28,9 @@ class moveIntoready"
     zready = data.z - zoff
 
     # Move to the desired position
-    movement.moveto(xready, yready, zready)
+    right = baxter_interface.Limb('right')
+    right.set_joint_position_speed(0.05)
+    movement.moveTo(xready, yready, zready)
 
 if __name__ == '__main__':
     pf = PosFind()

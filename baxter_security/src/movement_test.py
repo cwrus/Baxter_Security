@@ -29,10 +29,11 @@ def moveRel(x, y, z):
 	newZ = curZ + z
 	loc = Point(newX, newY, newZ)
 
-	limb_joints = ik_solve("right", loc, pose["orientation"]) 
+	limb_joints = ik_solve("right", loc, pose["orientation"])
+	print limb_joints
 
-	if (limb_joints != -1):
-		right.move_to_joint_positions(limb_joints)
+	#if (limb_joints != -1):
+		#right.move_to_joint_positions(limb_joints)
 
 def moveTo(x, y, z):
 	right = baxter_interface.Limb('right')
@@ -80,8 +81,8 @@ def main():
 	right.set_joint_position_speed(0.1)
 
 	pose = right.endpoint_pose()
-	print "Current pos: ", pose
-	#moveRel1(0, 0, -.1)
+	#print "Current pos: ", pose
+	moveRel(0, 0, -.1)
 	#moveTo(.6, -.2, .2)
 
 if __name__ == '__main__':

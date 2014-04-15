@@ -21,5 +21,6 @@
   <group ns="baxter_security">
     <node name="find_red" pkg="kinect_test" type="find_red.py" respawn="true"/>
     <node name="find_xyz" pkg="kinect_test" type="find_xyz.py" respawn="true"/>
+    <node name="move_to_ready" pkg="baxter_security" type="baxter_move_into_ready_pos.py" respawn="true"/>
   </group>
 </launch>

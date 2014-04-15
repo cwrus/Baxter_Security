@@ -1,0 +1,7 @@
+first, install openni:
+sudo apt-get install openni2
+
+then run through "Getting_SDK"
+then "Setting_up_Moveit"
+
+then look at "First_Commands" and start playing. 

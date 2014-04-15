@@ -42,41 +42,22 @@ def moveTo(x, y, z):
 	if (limb_joints != -1):
 		right.move_to_joint_positions(limb_joints)
 
-def changeOri(x, y, z, w):
-	right = baxter_interface.Limb('right')
-	pose = right.endpoint_pose()
-	curX = pose["orientation"].x
-	curY = pose["orientation"].y
-	curZ = pose["orientation"].z
-	curW = pose["orientation"].w
-	newX = curX + x
-	newY = curY + y
-	newZ = curZ + z
-	newW = curW + w
-	ori = Quaternion(newX, newY, newZ, newW)
-
-	limb_joints = ik_solve("right", pose["location"], ori)
-
-	if (limb_joints != -1):
-		right.move_to_joint_positions(limb_joints)
-
-def setOri(x, y, z, w):
-	right = baxter_interface.Limb('right')
-
-	limb_joints = ik_solve("right", right.endpoint_pose()["location"], Quaternion(x, y, z, w))
-
-	if (limb_joints != -1):
-		right.move_to_joint_positions(limb_joints)
-
 def setWrist(theta):
 	right = baxter_interface.Limb('right')
 	rj = right.joint_names()
 	wrist = rj[6]
 
-	# Not sure if this is needed
-	baxter_external_devices.getch()
-	
-	joint_command = {wrist: 0.0}
+	joint_command = {}
+	for i in range(1, len(rj)):
+		joint_command[rj[i]] = right.joint_angle(rj[i])
+
+	print("Current ori : %s" % joint_command)
+
+	joint_command[wrist] = theta
+
+	print("New ori : %s" % joint_command)
+
+	right.move_to_joint_positions(joint_command)
 
 	for x in range(0, 300):
 		right.set_joint_positions(joint_command)

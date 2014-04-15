@@ -4,6 +4,7 @@ import rospy
 import baxter_interface
 import baxter_external_devices
 import math
+import movement
 
 from baxter_security.msg import Coords
 
@@ -23,7 +24,6 @@ def coordCallBack(data):
 	if not moved:
 		moved = True
 		theta = math.radians(data.theta)
-		print theta
 
 		right = baxter_interface.Limb('right')
 		right.set_joint_position_speed(0.1)
@@ -31,16 +31,10 @@ def coordCallBack(data):
 		wrist = rj[6]
 		orientation = right.joint_angle(wrist)
 		error = theta - orientation
-	
-		joint_command = {wrist: theta}
 
-		print error, joint_command
+		print theta, orientation, error
 
-		while (abs(error) > 0.01):
-			orientation = right.joint_angle(wrist)
-			error = theta - orientation
-			right.set_joint_positions(joint_command)
-			#print orientation, theta
+		movement.setWrist(theta)
 
 if __name__ == '__main__':
 	setup()

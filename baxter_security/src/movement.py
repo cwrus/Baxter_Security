@@ -50,15 +50,7 @@ def setWrist(theta):
 	joint_command = {}
 	for i in range(1, len(rj)):
 		joint_command[rj[i]] = right.joint_angle(rj[i])
-
-	print("Current ori : %s" % joint_command)
-
 	joint_command[wrist] = theta
 
-	print("New ori : %s" % joint_command)
-
 	right.move_to_joint_positions(joint_command)
-
-	for x in range(0, 300):
-		right.set_joint_positions(joint_command)
 	

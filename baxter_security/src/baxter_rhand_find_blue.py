@@ -16,7 +16,7 @@ from baxter_security.msg import Coords
 #Blue far: 110, 120, 200 - 120, 256, 256
 #Dark blue:110, 100, 40 - 130, 256, 256
 
-class RedDetect:
+class BlueDetect:
   def __init__(self):
     # Create this ros node
     rospy.init_node("baxter_security_hand_find_blue", anonymous=True)

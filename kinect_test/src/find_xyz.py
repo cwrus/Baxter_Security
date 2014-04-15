@@ -17,11 +17,15 @@ class PosFind:
     # Create this ros node
     rospy.init_node("baxter_security_find_xyz", anonymous=True)
 
-    # Subscribe to the red coordinate data
+    # Subscribe to the object coordinate data
     self.coords_sub = rospy.Subscriber("/baxter_security/lighter_coords", Coords, self.coordsCallback)
 
     # Subscribe to the point cloud data
     self.points_sub = rospy.Subscriber("/camera/depth_registered/points", PointCloud2, self.pcCallback)
+
+    # Create the publisher for the xyz
+    self.pub = rospy.Publisher("kinect_lighter_coords", Coords)
+    self.msg = Coords()
 
     # Spinlock to prevent concurrent writes to the pc data
     self.lock = threading.Lock()
@@ -48,8 +52,11 @@ class PosFind:
     xyz = pc2.read_points(self.pc_data, field_names=None, skip_nans=False, uvs=[[center[0],center[1]]])
     centerpoint = next(xyz)
 
-    print(center, centerpoint)
-
+    #print(center, centerpoint)
+    self.msg.x = centerpoint[0]
+    self.msg.y = centerpoint[1]
+    self.msg.z = centerpoint[2]
+    self.pub.publish(self.msg)
     # Unlock the pc data when we are done
     self.lock.release()
 

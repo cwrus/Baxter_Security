@@ -87,10 +87,12 @@ class BlueDetect:
       cv2.imshow("Shape", cv_image)
       cv2.waitKey(3)
 
+      height, width, depth = cv_image.shape
+
       self.msg.x = center[0]
       self.msg.y = center[1]
-      self.pub.publish(self.msg)
-
+      self.msg.height = height
+      self.msg.width = width
       self.msg.theta = angle;
       self.pub.publish(self.msg)
 

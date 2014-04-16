@@ -18,6 +18,7 @@ from baxter_core_msgs.srv import (
     SolvePositionIKRequest,
 )
 
+# Move relative to the current position
 def moveRel(x, y, z):
 	right = baxter_interface.Limb('right')
 	pose = right.endpoint_pose()
@@ -34,6 +35,7 @@ def moveRel(x, y, z):
 	if (limb_joints != -1):
 		right.move_to_joint_positions(limb_joints)
 
+# Moved to a specified XYZ location
 def moveTo(x, y, z):
 	right = baxter_interface.Limb('right')
 	
@@ -42,6 +44,19 @@ def moveTo(x, y, z):
 	if (limb_joints != -1):
 		right.move_to_joint_positions(limb_joints)
 
+# Translate the hand around on the XY plane relative to the current position
+def translateRel(x, y):
+	moveRel(x, y, 0)
+
+# Translate the hand around on the XY plane to a specific location
+def translateTo(x, y):
+	right = baxter_interface.Limb('right')
+	pose = right.endpoint_pose()
+	curZ = pose["position"].z
+
+	moveTo(x, y, curZ)
+
+# Set the wrist to the specified theta value
 def setWrist(theta):
 	right = baxter_interface.Limb('right')
 	rj = right.joint_names()

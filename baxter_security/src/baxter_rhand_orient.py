@@ -16,28 +16,36 @@ def setup():
 		coordCallBack(message)
 
 def coordCallBack(data):
+	heightScale = 0.00075
+	widthScale = 0.00075
+	tol = 20
 	x = data.x
 	y = data.y
 	height = data.height
 	width = data.width
-	heightScale = 0.001
-	widthScale = 0.001
-	heightError = height/2 - y
-	widthError = width/2 - x
+	heightError = height/2 - y - 50
+	widthError = width/2 - x - 30
 	theta = math.radians(data.theta)
 
 	right = baxter_interface.Limb('right')
-	right.set_joint_position_speed(.3)
+	right.set_joint_position_speed(.2)
 	rj = right.joint_names()
 	wrist = rj[6]
 	orientation = right.joint_angle(wrist)
 
+
 	#movement.setWrist(orientation + theta)
 
-	if (abs(widthError) > 20):
+	if True:
+		print right.endpoint_pose()
+	elif (abs(widthError) > tol and abs(heightError) > tol):
+		movement.translateRel(heightError*heightScale, widthError*widthScale)
+	elif abs(widthError) > tol:
 		movement.translateRel(0, widthError*widthScale)
-	if (abs(heightError) > 20):
+	elif abs(heightError) > tol:
 		movement.translateRel(heightError*heightScale, 0)
+	else:
+		print "I like it"
 
 if __name__ == '__main__':
 	setup()

@@ -22,6 +22,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   Coords.msg
+  FloatCoords.msg
 )
 
 # Create the new messages

@@ -33,7 +33,7 @@ class moveIntoReady:
     # Predetermined offsets from the kinect frame
     xoff = 0.899
     yoff = 0
-    zoff = 0.1
+    zoff = 0.7124
  
     # Get the current position
     right = baxter_interface.Limb('right')
@@ -44,7 +44,7 @@ class moveIntoReady:
 
     xready = xoff + data.x 
     yready = yoff + data.y
-    zready = data.z - zoff
+    zready = 0.1
 
     # Move to the desired position, xy, then z
     #right = baxter_interface.Limb('right')

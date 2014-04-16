@@ -27,15 +27,17 @@ def coordCallBack(data):
 	theta = math.radians(data.theta)
 
 	right = baxter_interface.Limb('right')
-	right.set_joint_position_speed(1)
+	right.set_joint_position_speed(.3)
 	rj = right.joint_names()
 	wrist = rj[6]
 	orientation = right.joint_angle(wrist)
 
 	#movement.setWrist(orientation + theta)
 
-	#movement.translateRel(widthError*widthScale, 0)
-	print widthError*widthScale
+	if (abs(widthError) > 20):
+		movement.translateRel(0, widthError*widthScale)
+	if (abs(heightError) > 20):
+		movement.translateRel(heightError*heightScale, 0)
 
 if __name__ == '__main__':
 	setup()

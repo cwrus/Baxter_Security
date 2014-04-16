@@ -1,0 +1,16 @@
+<launch>
+  <!-- Enabled (and re-enable) Baxter -->
+  <node name="re_enable_baxter" pkg="baxter_tools" type="enable_robot.py" args="-r"/>
+  <node name="enable_baxter" pkg="baxter_tools" type="enable_robot.py" args="-e"/>
+
+  <!-- Start publishing to the nodes to disable the sonar and collision detection -->
+  <node name="baxter_sonar_disable" pkg="rostopic" type="rostopic" args="pub /robot/sonar/head_sonar/set_sonars_enabled std_msgs/UInt16 0"/>
+  <node name="baxter_leftarm_collision_disable" pkg="rostopic" type="rostopic" args="pub /robot/limb/left/suppress_collision_avoidance std_msgs/Empty -r 10"/>
+  <node name="baxter_rightarm_collision_disable" pkg="rostopic" type="rostopic" args="pub /robot/limb/right/suppress_collision_avoidance std_msgs/Empty -r 10"/>
+
+  <!-- Start the trajectory server -->
+  <node name="baxter_set_trajectory" pkg="baxter_interface" type="joint_trajectory_action_server.py"/>
+
+  <!-- Set Baxter Right Hand Camera Settinga -->
+  <node name="baxter_right_cam_settings" pkg="rosservice" type="rosservice" args="call /cameras/open '{name: right_hand_camera, settings: {width: 640, height: 400 }}'"/>
+</launch>

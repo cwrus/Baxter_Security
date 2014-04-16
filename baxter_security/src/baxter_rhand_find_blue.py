@@ -81,8 +81,6 @@ class BlueDetect:
 
       cv2.line(cv_image, (int(xpos),int(ypos)), (int(xpos + 30 * math.cos(math.radians(angle - 90))), int(ypos + 30 * math.sin(math.radians(angle - 90)))), (255, 255, 0))
 
-      print angle
-
       cv2.namedWindow("Shape")
       cv2.imshow("Shape", cv_image)
       cv2.waitKey(3)

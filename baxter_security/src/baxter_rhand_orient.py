@@ -9,22 +9,35 @@ import movement
 from baxter_security.msg import Coords
 
 def setup():
-	rospy.init_node("baxter_security_rhand_wrist_orient", anonymous=True)
+	rospy.init_node("baxter_security_rhand_orient", anonymous=True)
 
 	while not rospy.is_shutdown():
 		message = rospy.wait_for_message("/lighter_coords", Coords)
 		coordCallBack(message)
 
 def coordCallBack(data):
+	x = data.x
+	y = data.y
+	height = data.height
+	width = data.width
+	heightScale = 0.001
+	widthScale = 0.001
+	heightError = height/2 - y
+	widthError = width/2 - x
 	theta = math.radians(data.theta)
 
 	right = baxter_interface.Limb('right')
-	right.set_joint_position_speed(1)
+	right.set_joint_position_speed(.3)
 	rj = right.joint_names()
 	wrist = rj[6]
 	orientation = right.joint_angle(wrist)
 
-	movement.setWrist(orientation + theta)
+	#movement.setWrist(orientation + theta)
+
+	if (abs(widthError) > 20):
+		movement.translateRel(0, widthError*widthScale)
+	if (abs(heightError) > 20):
+		movement.translateRel(heightError*heightScale, 0)
 
 if __name__ == '__main__':
 	setup()

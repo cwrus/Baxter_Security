@@ -81,18 +81,18 @@ class BlueDetect:
 
       cv2.line(cv_image, (int(xpos),int(ypos)), (int(xpos + 30 * math.cos(math.radians(angle - 90))), int(ypos + 30 * math.sin(math.radians(angle - 90)))), (255, 255, 0))
 
-      print angle
-
       cv2.namedWindow("Shape")
       cv2.imshow("Shape", cv_image)
       cv2.waitKey(3)
 
+      height, width, depth = cv_image.shape
+
       self.msg.x = center[0]
       self.msg.y = center[1]
-      self.pub.publish(self.msg)
-
+      self.msg.height = height
+      self.msg.width = width
       self.msg.theta = angle;
       self.pub.publish(self.msg)
 
 if __name__ == '__main__':
-  rd = RedDetect()
+  bd = BlueDetect()

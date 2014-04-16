@@ -10,17 +10,7 @@
 
   <!-- Start the trajectory server -->
   <node name="baxter_set_trajectory" pkg="baxter_interface" type="joint_trajectory_action_server.py"/>
-  
-  <!-- Start Openni -->
-  <include file="$(find openni_launch)/launch/openni.launch"/>
 
   <!-- Set Baxter Right Hand Camera Settinga -->
   <node name="baxter_right_cam_settings" pkg="rosservice" type="rosservice" args="call /cameras/open '{name: right_hand_camera, settings: {width: 640, height: 400 }}'"/>
-
-  <!-- Push our nodes into the bxter_security group -->
-  <group ns="baxter_security">
-    <node name="find_red" pkg="kinect_test" type="find_red.py" respawn="true"/>
-    <node name="find_xyz" pkg="kinect_test" type="find_xyz.py" respawn="true"/>
-    <node name="move_to_ready" pkg="baxter_security" type="baxter_move_into_ready_pos.py" respawn="true"/>
-  </group>
 </launch>

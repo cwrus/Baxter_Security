@@ -52,5 +52,7 @@ class moveIntoReady:
     movement.moveTo(xready, yready, curZ)
     movement.moveTo(xready, yready, zready)
 
+    rospy.signal_shutdown("At approach posisition")
+
 if __name__ == '__main__':
     rdy = moveIntoReady()

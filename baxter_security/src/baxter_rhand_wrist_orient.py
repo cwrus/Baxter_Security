@@ -9,31 +9,22 @@ import movement
 from baxter_security.msg import Coords
 
 def setup():
-	global moved
-	moved = False
 	rospy.init_node("baxter_security_rhand_wrist_orient", anonymous=True)
 
-	global coords_sub
-	coords_sub = rospy.Subscriber("/lighter_coords", Coords, coordCallBack)
-
-	rospy.spin()
+	while not rospy.is_shutdown():
+		message = rospy.wait_for_message("/lighter_coords", Coords)
+		coordCallBack(message)
 
 def coordCallBack(data):
-	global moved
+	theta = math.radians(data.theta)
 
-	if not moved:
-		moved = True
-		theta = math.radians(data.theta)
+	right = baxter_interface.Limb('right')
+	right.set_joint_position_speed(1)
+	rj = right.joint_names()
+	wrist = rj[6]
+	orientation = right.joint_angle(wrist)
 
-		right = baxter_interface.Limb('right')
-		right.set_joint_position_speed(1)
-		rj = right.joint_names()
-		wrist = rj[6]
-		orientation = right.joint_angle(wrist)
-
-		movement.setWrist(orientation + theta)
-
-		#rospy.signal_shutdown("Movement complete")
+	movement.setWrist(orientation + theta)
 
 if __name__ == '__main__':
 	setup()

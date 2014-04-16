@@ -95,4 +95,4 @@ class BlueDetect:
       self.pub.publish(self.msg)
 
 if __name__ == '__main__':
-  rd = RedDetect()
+  bd = BlueDetect()

@@ -24,7 +24,7 @@ catkin_python_setup()
 # Add our message files
 add_message_files(
   FILES
-  Coords.msg
+  BaxterRHandCamCoords.msg
 )
 
 # Create the new messages

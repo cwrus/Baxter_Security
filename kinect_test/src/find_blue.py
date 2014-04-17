@@ -10,7 +10,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from kinect_test.msg import Coords
+from kinect_test.msg import KinectCoords
 
 class RedDetect:
   def __init__(self):
@@ -18,8 +18,8 @@ class RedDetect:
     rospy.init_node("baxter_security_find_red", anonymous=True)
   
     # Create the publisher for the coordinates
-    self.pub = rospy.Publisher("lighter_coords", Coords)
-    self.msg = Coords()
+    self.pub = rospy.Publisher("lighter_coords", KinectCoords)
+    self.msg = KinectCoords()
 
     # Setup the OpenCV <--> ROS bridge
     self.bridge = CvBridge()

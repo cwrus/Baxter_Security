@@ -6,7 +6,7 @@ import baxter_external_devices
 import math
 import movement
 
-from baxter_security.msg import Coords
+from baxter_security.msg import BaxterRHandCamCoords
 
 global wristDone, armDone
 wirstDone = False
@@ -17,7 +17,7 @@ def setup():
 	rospy.init_node("baxter_security_rhand_orient", anonymous=True)
 
 	while not rospy.is_shutdown():
-		message = rospy.wait_for_message("/lighter_coords", Coords)
+		message = rospy.wait_for_message("/lighter_coords", BaxterRHandCamCoords)
 		coordCallBack(message)
 
 def coordCallBack(data):

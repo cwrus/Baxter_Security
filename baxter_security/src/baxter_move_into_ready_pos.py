@@ -5,7 +5,7 @@ import rospy
 import baxter_interface
 import baxter_external_devices
 import movement
-from kinect_test.msg import FloatCoords
+from kinect_test.msg import KinectFloatCoords
 from geometry_msgs.msg import (
     PoseStamped,
     Pose,
@@ -25,7 +25,7 @@ class moveIntoReady:
     rospy.init_node("baxter_move_into_ready", anonymous=True)  
 
     # Subscribe to the kinect's coord publisher
-    rospy.Subscriber("/kinect_lighter_coords", FloatCoords, self.coordsCallback)
+    rospy.Subscriber("/kinect_lighter_coords", KinectFloatCoords, self.coordsCallback)
 
     rospy.spin()
 

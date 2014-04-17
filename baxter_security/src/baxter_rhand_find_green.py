@@ -11,7 +11,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from kinect_test.msg import Coords
+from baxter_security.msg import BaxterRHandCamCoords
 
 class RedDetect:
   def __init__(self):
@@ -19,8 +19,8 @@ class RedDetect:
     rospy.init_node("baxter_security_hand_find_red", anonymous=True)
   
     # Create the publisher
-    self.pub = rospy.Publisher("lighter_coords", Coords)
-    self.msg = Coords()
+    self.pub = rospy.Publisher("lighter_coords", BaxterRHandCamCoords)
+    self.msg = BaxterRHandCamCoords()
 
     # Create the publisher for the orientation
     self.pub = rospy.Publisher("lighter_orientation", Orientation)

@@ -50,6 +50,33 @@ def moveTo(x, y, z):
 	if (limb_joints != -1):
 		right.move_to_joint_positions(limb_joints)
 
+# Moved to a specified X location
+def moveToX(x):
+	right = baxter_interface.Limb('right')
+	pose = right.endpoint_pose()
+	curY = pose["position"].y
+	curZ = pose["position"].z
+
+	moveRel(x, curY, curZ)
+
+# Moved to a specified Y location
+def moveToY(y):
+	right = baxter_interface.Limb('right')
+	pose = right.endpoint_pose()
+	curX = pose["position"].x
+	curZ = pose["position"].z
+
+	moveRel(curX, y, curZ)
+
+# Moved to a specified Z location
+def moveToZ(z):
+	right = baxter_interface.Limb('right')
+	pose = right.endpoint_pose()
+	curX = pose["position"].x
+	curY = pose["position"].y
+
+	moveRel(curX, curY, z)
+
 # Translate the hand around on the XY plane relative to the current position
 def translateRel(x, y):
 	#maintain height, and move x and y meters relative to currnt position

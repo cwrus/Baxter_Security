@@ -12,7 +12,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from baxter_security.msg import Coords
+from baxter_security.msg import BaxterRHandCamCoords
 
 #Blue far: 110, 120, 200 - 120, 256, 256
 #Dark blue:110, 100, 40 - 130, 256, 256

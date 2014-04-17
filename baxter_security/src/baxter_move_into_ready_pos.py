@@ -5,7 +5,7 @@ import rospy
 import baxter_interface
 import baxter_external_devices
 import movement
-from kinect_test.msg import FloatCoords
+from kinect_test.msg import KinectFloatCoords
 from geometry_msgs.msg import (
     PoseStamped,
     Pose,

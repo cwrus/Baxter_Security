@@ -6,7 +6,7 @@ import baxter_external_devices
 import math
 import movement
 
-from baxter_security.msg import Coords
+from baxter_security.msg import BaxterRHandCamCoords
 
 def setup():
 	rospy.init_node("baxter_security_rhand_orient", anonymous=True)

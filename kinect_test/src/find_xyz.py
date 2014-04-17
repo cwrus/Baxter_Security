@@ -10,7 +10,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from kinect_test.msg import Coords, FloatCoords
+from kinect_test.msg import KinectCoords, KinectFloatCoords
 
 class PosFind:
   def __init__(self):

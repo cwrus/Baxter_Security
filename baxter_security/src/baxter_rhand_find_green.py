@@ -11,7 +11,7 @@ from std_msgs.msg import String
 from sensor_msgs.msg import Image, PointCloud2
 from cv_bridge import CvBridge, CvBridgeError
 from roslib import message
-from kinect_test.msg import Coords
+from baxter_security.msg import BaxterRHandCamCoords
 
 class RedDetect:
   def __init__(self):

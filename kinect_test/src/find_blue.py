@@ -41,7 +41,7 @@ class RedDetect:
     cv_imageHSV = np.zeros((cv_image.shape),np.uint8) # Creating a blank image of cv_image size
     cv_imageHSV = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV) # Change color format
     cv_imageThresh = np.zeros((cv_image.shape), np.uint8)
-    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 60, 120)), np.array((120,256,256))) # Convert the HSV image to binary, getting red
+    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 60, 200)), np.array((120,256,256))) # Convert the HSV image to binary, getting red
     cv_imageThresh = cv2.GaussianBlur(cv_imageThresh, (3,3), 0) # Smooth the output picture
     # End getting color
 

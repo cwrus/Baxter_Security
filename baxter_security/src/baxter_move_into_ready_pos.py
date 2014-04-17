@@ -31,7 +31,7 @@ class moveIntoReady:
 
   def coordsCallback(self, data):
     # Predetermined offsets from the kinect frame
-    xoff = 0.9 # 0.899
+    xoff = 0.9
     yoff = 0
     zoff = 0.7124
  
@@ -41,23 +41,11 @@ class moveIntoReady:
     curX = pose["position"].x
     curY = pose["position"].y
     curZ = pose["position"].z
-    print curX, curY, curZ
-    print data.x, data.y
-    xready = xoff - data.x 
+    xready = xoff + data.x 
     yready = yoff + data.y
     zready = 0.15
 
-    print xready, yready, zready 
-
-    # Move to the desired position, xy, then z
-    right.set_joint_position_speed(0.05)
-    movement.moveTo(xready, curY, curZ)
-    curX = pose["position"].x
-    movement.moveTo(curX, yready, curZ)
-    curY = pose["position"].y
-    curY = pose["position"].y
-    movement.moveTo(curX, curY, zready)
-
+    movement.getClose(xready, yready, zready)
     rospy.signal_shutdown("At approach posisition")
 
 if __name__ == '__main__':

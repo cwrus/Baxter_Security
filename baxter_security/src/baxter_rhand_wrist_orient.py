@@ -12,7 +12,7 @@ def setup():
 	rospy.init_node("baxter_security_rhand_wrist_orient", anonymous=True)
 
 	while not rospy.is_shutdown():
-		message = rospy.wait_for_message("/lighter_coords", Coords)
+		message = rospy.wait_for_message("/lighter_coords", BaxterRHandCamCoords)
 		coordCallBack(message)
 
 def coordCallBack(data):

@@ -19,8 +19,8 @@ class RedDetect:
     rospy.init_node("baxter_security_hand_find_red", anonymous=True)
   
     # Create the publisher
-    self.pub = rospy.Publisher("lighter_coords", Coords)
-    self.msg = Coords()
+    self.pub = rospy.Publisher("lighter_coords", BaxterRHandCamCoords)
+    self.msg = BaxterRHandCamCoords()
 
     # Create the publisher for the orientation
     self.pub = rospy.Publisher("lighter_orientation", Orientation)

@@ -21,8 +21,8 @@ catkin_python_setup()
 # Add our message files
 add_message_files(
   FILES
-  Coords.msg
-  FloatCoords.msg
+  KinectCoords.msg
+  KinectFloatCoords.msg
 )
 
 # Create the new messages

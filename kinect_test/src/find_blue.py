@@ -18,8 +18,8 @@ class RedDetect:
     rospy.init_node("baxter_security_find_red", anonymous=True)
   
     # Create the publisher for the coordinates
-    self.pub = rospy.Publisher("lighter_coords", Coords)
-    self.msg = Coords()
+    self.pub = rospy.Publisher("lighter_coords", KinectCoords)
+    self.msg = KinectCoords()
 
     # Setup the OpenCV <--> ROS bridge
     self.bridge = CvBridge()

@@ -23,8 +23,8 @@ class BlueDetect:
     rospy.init_node("baxter_security_hand_find_blue", anonymous=True)
   
     # Create the publisher
-    self.pub = rospy.Publisher("lighter_coords", Coords)
-    self.msg = Coords()
+    self.pub = rospy.Publisher("lighter_coords", BaxterRHandCamCoords)
+    self.msg = BaxterRHandCamCoords()
 
     # Setup the OpenCV <--> ROS bridge
     self.bridge = CvBridge()

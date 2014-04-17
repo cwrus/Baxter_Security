@@ -25,7 +25,7 @@ class moveIntoReady:
     rospy.init_node("baxter_move_into_ready", anonymous=True)  
 
     # Subscribe to the kinect's coord publisher
-    rospy.Subscriber("/kinect_lighter_coords", FloatCoords, self.coordsCallback)
+    rospy.Subscriber("/kinect_lighter_coords", KinectFloatCoords, self.coordsCallback)
 
     rospy.spin()
 

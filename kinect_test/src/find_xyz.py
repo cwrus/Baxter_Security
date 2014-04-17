@@ -18,14 +18,14 @@ class PosFind:
     rospy.init_node("baxter_security_find_xyz", anonymous=True)
 
     # Subscribe to the object coordinate data
-    self.coords_sub = rospy.Subscriber("/lighter_coords", Coords, self.coordsCallback)
+    self.coords_sub = rospy.Subscriber("/lighter_coords", KinectCoords, self.coordsCallback)
 
     # Subscribe to the point cloud data
     self.points_sub = rospy.Subscriber("/camera/depth_registered/points", PointCloud2, self.pcCallback)
 
     # Create the publisher for the xyz
-    self.pub = rospy.Publisher("kinect_lighter_coords", FloatCoords)
-    self.msg = FloatCoords()
+    self.pub = rospy.Publisher("kinect_lighter_coords", KinectFloatCoords)
+    self.msg = KinectFloatCoords()
 
     # Spinlock to prevent concurrent writes to the pc data
     self.lock = threading.Lock()

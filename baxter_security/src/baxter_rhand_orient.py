@@ -8,6 +8,11 @@ import movement
 
 from baxter_security.msg import Coords
 
+global wristDone, armDone
+wirstDone = False
+armDone = False
+
+
 def setup():
 	rospy.init_node("baxter_security_rhand_orient", anonymous=True)
 
@@ -16,6 +21,7 @@ def setup():
 		coordCallBack(message)
 
 def coordCallBack(data):
+        global wristDone, armDone 
 	heightScale = 0.00075
 	widthScale = 0.00075
 	tol = 20
@@ -44,11 +50,19 @@ def coordCallBack(data):
 		movement.translateRel(heightError*heightScale, 0)
 	else:
 		print "Arm is good"
+       		armDone = True 
 
 	if (abs(theta) > wristTol):
 		movement.setWrist(orientation + theta)
 	else:
 		print "Wrist is good"
+        	wristDone = True
+
+        if wristDone == True and armDone == True
+		#Baxter2KinectZ =            
+		z = 0 #kiectZ-Baxter2KinextZ
+
+
 
 if __name__ == '__main__':
 	setup()

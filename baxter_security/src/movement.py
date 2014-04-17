@@ -116,7 +116,7 @@ def setWrist(theta):
 	right.move_to_joint_positions(joint_command)
 	
 def getClose(x, y, z):
-	global found, delta
+	global found, delta, closeQue
 	right = baxter_interface.Limb('right')
 	pose = right.endpoint_pose()
 	curX = pose["position"].x

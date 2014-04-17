@@ -19,6 +19,7 @@ def coordCallBack(data):
 	heightScale = 0.00075
 	widthScale = 0.00075
 	tol = 20
+	wristTol = 0.02
 	x = data.x
 	y = data.y
 	height = data.height
@@ -33,19 +34,21 @@ def coordCallBack(data):
 	wrist = rj[6]
 	orientation = right.joint_angle(wrist)
 
-
-	#movement.setWrist(orientation + theta)
-
-	if True:
-		print right.endpoint_pose()
-	elif (abs(widthError) > tol and abs(heightError) > tol):
+	#if True:
+		#print right.endpoint_pose()
+	if (abs(widthError) > tol and abs(heightError) > tol):
 		movement.translateRel(heightError*heightScale, widthError*widthScale)
 	elif abs(widthError) > tol:
 		movement.translateRel(0, widthError*widthScale)
 	elif abs(heightError) > tol:
 		movement.translateRel(heightError*heightScale, 0)
 	else:
-		print "I like it"
+		print "Arm is good"
+
+	if (abs(theta) > wristTol):
+		movement.setWrist(orientation + theta)
+	else:
+		print "Wrist is good"
 
 if __name__ == '__main__':
 	setup()

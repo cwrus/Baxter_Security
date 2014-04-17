@@ -42,6 +42,7 @@ class moveIntoReady:
     curY = pose["position"].y
     curZ = pose["position"].z
     print curX, curY, curZ
+    print xready, yready, zready 
     xready = xoff + data.x 
     yready = yoff + data.y
     zready = 0.1

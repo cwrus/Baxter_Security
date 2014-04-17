@@ -25,7 +25,7 @@ from baxter_core_msgs.srv import (
 global found 
 found = False
 global delta 
-delta = .01
+delta = .001
 global closeQue
 closeQue = Queue.Queue(0)
 

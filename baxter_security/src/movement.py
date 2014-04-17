@@ -21,8 +21,10 @@ from baxter_core_msgs.srv import (
     SolvePositionIKRequest,
 )
 
-global found = False
-global delta = .01
+global found 
+found = False
+global delta 
+delta = .01
 
 # Move x,y,z meters relative to the current position
 def moveRel(x, y, z):
@@ -118,7 +120,7 @@ def getClose(x, y, z):
 	curY = pose["position"].y
 	curZ = pose["position"].z
 
-	if (not closeTo(x,y,z) and (not found):
+	if (not closeTo(x,y,z) and (not found)):
 		newX = curX + x
 		newY = curY + y
 		newZ = curZ + z
@@ -129,6 +131,7 @@ def getClose(x, y, z):
 		#if there's a valid solution, move to it. 
 		if (limb_joints != -1):
 			found = True
+                        print "Found"
 			right.set_joint_position_speed(.2)
 			right.move_to_joint_positions(limb_joints)
 		else:

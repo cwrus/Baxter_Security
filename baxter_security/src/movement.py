@@ -129,6 +129,7 @@ def getClose(x, y, z):
 		#if there's a valid solution, move to it. 
 		if (limb_joints != -1):
 			found = True
+			right.set_joint_position_speed(.2)
 			right.move_to_joint_positions(limb_joints)
 		else:
 			getClose(x+delta,y,z)

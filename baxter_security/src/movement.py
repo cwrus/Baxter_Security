@@ -117,6 +117,7 @@ def setWrist(theta):
 	
 def getClose(x, y, z):
 	global found, delta, closeQue
+	print x, y, z
 	right = baxter_interface.Limb('right')
 	pose = right.endpoint_pose()
 	curX = pose["position"].x
@@ -141,11 +142,11 @@ def getClose(x, y, z):
 			
 			closeQue.put([x+delta, y, z])
 			closeQue.put([x,y+delta, z])
-			closeQue.put([x,y,z+delta])
+			#closeQue.put([x,y,z+delta])
 
 			closeQue.put([x-delta, y, z])
 			closeQue.put([x,y-delta, z])
-			closeQue.put([x,y,z-delta])
+			#closeQue.put([x,y,z-delta])
 
 			next = closeQue.get()	
 			getClose(next[0], next[1], next[2])

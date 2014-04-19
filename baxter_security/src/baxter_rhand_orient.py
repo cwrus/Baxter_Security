@@ -5,10 +5,16 @@ import baxter_interface
 import baxter_external_devices
 import math
 import movement
-
+from kinect_test.msg import KinectFloatCoords
 from baxter_security.msg import BaxterRHandCamCoords
+from geometry_msgs.msg import (
+    PoseStamped,
+    Pose,
+    Point,
+    Quaternion,
+)
 
-global wristDone, armDone
+global wristDone, armDone, kinectZ
 wirstDone = False
 armDone = False
 
@@ -16,12 +22,20 @@ armDone = False
 def setup():
 	rospy.init_node("baxter_security_rhand_orient", anonymous=True)
 
+  	rospy.Subscriber("/kinect_lighter_coords", KinectFloatCoords, setZcallback)
+
+
 	while not rospy.is_shutdown():
 		message = rospy.wait_for_message("/lighter_coords", BaxterRHandCamCoords)
 		coordCallBack(message)
+def setZcallback(data):
+	global kinectZ
+	kinectZ = data.z	
 
 def coordCallBack(data):
         global wristDone, armDone 
+
+	
 	heightScale = 0.00075
 	widthScale = 0.00075
 	tol = 20
@@ -58,9 +72,13 @@ def coordCallBack(data):
 		print "Wrist is good"
         	wristDone = True
 
-        if wristDone == True and armDone == True
-		#Baxter2KinectZ =            
-		z = 0 #kiectZ-Baxter2KinextZ
+        if wristDone == True and armDone == True:
+		right = baxter_interface.Limb('right')
+    		pose = right.endpoint_pose()
+		curZ = pose["position"].z
+		objHeightOffTable = 91.44 - kinectZ           
+		targetZ = objHeightOffTable - 20.2
+		print targetZ
 
 
 

@@ -25,7 +25,7 @@ from baxter_core_msgs.srv import (
 global found 
 found = False
 global delta 
-delta = .001
+delta = .01
 global closeQue
 closeQue = Queue.Queue(0)
 
@@ -65,7 +65,7 @@ def moveToX(x):
 	curY = pose["position"].y
 	curZ = pose["position"].z
 
-	moveRel(x, curY, curZ)
+	moveTo(x, curY, curZ)
 
 # Moved to a specified Y location
 def moveToY(y):
@@ -74,7 +74,7 @@ def moveToY(y):
 	curX = pose["position"].x
 	curZ = pose["position"].z
 
-	moveRel(curX, y, curZ)
+	moveTo(curX, y, curZ)
 
 # Moved to a specified Z location
 def moveToZ(z):
@@ -83,7 +83,7 @@ def moveToZ(z):
 	curX = pose["position"].x
 	curY = pose["position"].y
 
-	moveRel(curX, curY, z)
+	moveTo(curX, curY, z)
 
 # Translate the hand around on the XY plane relative to the current position
 def translateRel(x, y):
@@ -117,7 +117,6 @@ def setWrist(theta):
 	
 def getClose(x, y, z):
 	global found, delta, closeQue
-	print x, y, z
 	right = baxter_interface.Limb('right')
 	pose = right.endpoint_pose()
 	curX = pose["position"].x
@@ -142,11 +141,11 @@ def getClose(x, y, z):
 			
 			closeQue.put([x+delta, y, z])
 			closeQue.put([x,y+delta, z])
-			#closeQue.put([x,y,z+delta])
+			closeQue.put([x,y,z+delta])
 
 			closeQue.put([x-delta, y, z])
 			closeQue.put([x,y-delta, z])
-			#closeQue.put([x,y,z-delta])
+			closeQue.put([x,y,z-delta])
 
 			next = closeQue.get()	
 			getClose(next[0], next[1], next[2])

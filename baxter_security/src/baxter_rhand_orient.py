@@ -5,7 +5,7 @@ import baxter_interface
 import baxter_external_devices
 import math
 import movement
-from kinect_test.msg import KinectFloatCoords
+from kinect_cam.msg import KinectFloatCoords
 from baxter_security.msg import BaxterRHandCamCoords
 from geometry_msgs.msg import (
     PoseStamped,

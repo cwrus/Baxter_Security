@@ -1,9 +1,9 @@
 from subprocess import call
 
+# run roslaunch openni_launch openni.launch 
+
 # Calibrate the grippers
-call(["rosrun","bexter_security","baxter_grippers_calibrate"])
-# Start the kinect/openni 
-call(["roslaunch","openni_launch","openni.launch"])
+call(["rosrun","baxter_security","baxter_grippers_calibrate.py"])
 # Use the kinect to find blue lighter
 call(["rosrun","kinect_cam","find_blue.py"])
 # Use the kinect to find the xyz center of the lighter

@@ -18,7 +18,7 @@ class RedDetect:
     rospy.init_node("baxter_security_find_red", anonymous=True)
   
     # Create the publisher for the coordinates
-    self.pub = rospy.Publisher("lighter_coords", KinectCoords()
+    self.pub = rospy.Publisher("lighter_coords", KinectCoords)
     self.msg = KinectCoords()
 
     # Setup the OpenCV <--> ROS bridge
@@ -36,27 +36,29 @@ class RedDetect:
       print e
 
     cv_image=np.array(cv_image, dtype=np.uint8) #convert image to a numpy
-    # Begin getting color
+    # This will find all blue images in the vision range of the kinect
     cv_image = cv2.GaussianBlur(cv_image, (3,3), 0) # Smooth the picture
     cv_imageHSV = np.zeros((cv_image.shape),np.uint8) # Creating a blank image of cv_image size
     cv_imageHSV = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV) # Change color format
     cv_imageThresh = np.zeros((cv_image.shape), np.uint8)
-    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((80, 60, 200)), np.array((90,256,256))) # Convert the HSV image to binary, getting red
+    # Blue HSV is in the range below
+    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((80, 60, 200)), np.array((90,256,256))) # Convert the HSV image to binary, getting green
     cv_imageThresh = cv2.GaussianBlur(cv_imageThresh, (3,3), 0) # Smooth the output picture
-    # End getting color
 
+    # Display the raw image and the b/w image
     cv2.namedWindow("Color")
     cv2.imshow("Color", cv_imageThresh)
     cv2.namedWindow("Video")
     cv2.imshow("Video", cv_image)
     cv2.waitKey(3)
 
-    # Fitting rectangle
+    # Fits a rectable to the blue contour
     contour, hierarchy = cv2.findContours(cv_imageThresh, cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
 
     largestArea = 0
     largestCnt = 0
-
+    
+    # Finds the largest blue contour in the image and draws a shape around it
     for cnt in contour:
       approx = cv2.approxPolyDP(cnt, cv2.arcLength(cnt, True)*0.02, True)
       if cv2.contourArea(cnt) > largestArea:       
@@ -75,6 +77,7 @@ class RedDetect:
       self.msg.x = center[0]
       self.msg.y = center[1]
       self.pub.publish(self.msg)
+
 
 if __name__ == '__main__':
   rd = RedDetect()

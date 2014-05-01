@@ -46,7 +46,7 @@ class BlueDetect:
     cv_imageHSV = np.zeros((cv_image.shape),np.uint8) # Creating a blank image of cv_image size
     cv_imageHSV = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV) # Change color format
     cv_imageThresh = np.zeros((cv_image.shape), np.uint8)
-    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 100, 40)), np.array((130,256,256))) # Convert the HSV image to binary, getting red
+    cv_imageThresh = cv2.inRange(cv_imageHSV, np.array((110, 100, 40)), np.array((130,256,256))) # Convert the HSV image to binary, getting blue
     cv_imageThresh = cv2.GaussianBlur(cv_imageThresh, (3,3), 0) # Smooth the output picture
     # End getting color
 
@@ -61,7 +61,8 @@ class BlueDetect:
 
     largestArea = 0
     largestCnt = 0
-
+  
+    # Finds the largest blue shape as the lighter
     for cnt in contour:
       approx = cv2.approxPolyDP(cnt, cv2.arcLength(cnt, True)*0.02, True)
       if cv2.contourArea(cnt) > largestArea:       
@@ -75,10 +76,10 @@ class BlueDetect:
       center = map(lambda x: int(round(x)), center)
 
       (xpos,ypos),(MA,ma),angle = cv2.fitEllipse(largestCnt)
-
+      # Finds the angle and normalizes it between -pi/2 and pi/2 
       if angle > 90:
         angle = angle - 180;
-
+      
       cv2.line(cv_image, (int(xpos),int(ypos)), (int(xpos + 30 * math.cos(math.radians(angle - 90))), int(ypos + 30 * math.sin(math.radians(angle - 90)))), (255, 255, 0))
 
       cv2.namedWindow("Shape")
